@@ -1,0 +1,99 @@
+@baseUrl = http://localhost:3000
+
+### Get all movies based on a query and sorting(expected: 200)
+GET {{baseUrl}}/movies?genre=Sci-Fi&minYear=1990&sort=year
+
+### Get all movies (expected: 200)
+GET {{baseUrl}}/movies
+
+### Get movie by ID (expected: 200)
+GET {{baseUrl}}/movies/1
+
+### Movie that doesn't exist (expected: 404)
+GET {{baseUrl}}/movies/999
+
+### Create a new movie (expected: 201)
+POST {{baseUrl}}/movies
+Content-Type: application/json
+
+{
+  "title": "Blade Runner",
+  "director": "Ridley Scott",
+  "year": 1982,
+  "genre": "Cyberpunk"
+}
+
+### Invalid movie (expected: 400)
+POST {{baseUrl}}/movies
+Content-Type: application/json
+
+{
+  "title": "Blade Runner"
+}
+
+### Invalid minYear (expected: 400)
+GET {{baseUrl}}/movies?minYear=abc
+
+### Invalid sort (expected: 400)
+GET {{baseUrl}}/movies?sort=banana
+
+### Replace a movie with PUT - all fields replaced (expected: 200)
+PUT {{baseUrl}}/movies/1
+Content-Type: application/json
+
+{
+  "title": "Inception (Remastered)",
+  "director": "Christopher Nolan",
+  "year": 2011,
+  "genre": "Action"
+}
+
+### PUT with a missing property (expected: 400)
+PUT {{baseUrl}}/movies/1
+Content-Type: application/json
+
+{
+  "title": "Inception (Remastered)",
+  "director": "Christopher Nolan"
+}
+
+### PUT on a movie that doesn't exist (expected: 404)
+PUT {{baseUrl}}/movies/999
+Content-Type: application/json
+
+{
+  "title": "Ghost",
+  "director": "Jerry Zucker",
+  "year": 1990,
+  "genre": "Romance"
+}
+
+### Partially update a movie - only genre changes (expected: 200)
+PATCH {{baseUrl}}/movies/2
+Content-Type: application/json
+
+{
+  "genre": "Action"
+}
+
+### PATCH with invalid data (expected: 400)
+PATCH {{baseUrl}}/movies/2
+Content-Type: application/json
+
+{
+  "year": "not a number"
+}
+
+### Delete a movie (expected: 204, empty body)
+DELETE {{baseUrl}}/movies/4
+
+### Delete the same movie again (expected: 404)
+DELETE {{baseUrl}}/movies/4
+
+### Delete a non existing movie (expected: 404)
+
+DELETE {{baseUrl}}/movies/999
+
+### Testing Route that doesn't exist
+
+GET {{baseUrl}}/does-not-exist
