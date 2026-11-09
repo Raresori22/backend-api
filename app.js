@@ -22,7 +22,6 @@ let movies = [
   }
 ];
 
-let nextId = 4;
 
 const express = require("express");
 const morgan = require("morgan");
@@ -77,7 +76,7 @@ app.post('/movies', (req, res) => {
     }
 
     const { title, director, year, genre } = req.body;
-    const newMovie = { id: nextId++, title, director, year, genre };
+    const newMovie = { id: movies.length + 1, title, director, year, genre };
     movies.push(newMovie);
     res.status(201).json(newMovie);
 })
