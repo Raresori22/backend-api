@@ -97,3 +97,7 @@ DELETE {{baseUrl}}/movies/999
 ### Testing Route that doesn't exist
 
 GET {{baseUrl}}/does-not-exist
+
+### Health
+
+GET http://localhost:3000/health/database
